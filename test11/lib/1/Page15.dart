@@ -40,13 +40,14 @@ class Page15 extends StatefulWidget {
   final String dateDK;
   final String timeDK;
   @override
-  State<StatefulWidget> createState() {
-    return _MyAppState();
-  }
+  State<Page15> createState() =>
+     _MyAppState();
+
 }
 
 class _MyAppState extends State<Page15> with WidgetsBindingObserver {
-  get() async {
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+  getData() async {
     var response = await http.post(
       Uri.parse("https://api.dangkiem.online/api/User/schedule"),
       headers: {
@@ -74,7 +75,7 @@ class _MyAppState extends State<Page15> with WidgetsBindingObserver {
       final snackBar = SnackBar(
         content: const Text('Đặt lịch thành công'),
         action: SnackBarAction(
-          label: 'Undo',
+          label: 'Ẩn',
           textColor: Colors.white,
           onPressed: () {
           },
@@ -92,7 +93,7 @@ class _MyAppState extends State<Page15> with WidgetsBindingObserver {
       final snackBar = SnackBar(
         content: const Text('Thông tin không hợp lệ'),
         action: SnackBarAction(
-          label: 'Undo',
+          label: 'Ẩn',
           textColor: Colors.white,
           onPressed: () {
           },
@@ -120,11 +121,15 @@ class _MyAppState extends State<Page15> with WidgetsBindingObserver {
       }
       return Colors.red;
     }
-    return MaterialApp(
-      title: "Giao diện thực tập",
-      home: Scaffold(
+    // return MaterialApp(
+    //   key: _scaffoldKey,
+    //   title: "Giao diện thực tập",
+    //   home: Scaffold(
+    return Scaffold(
+      key: _scaffoldKey,
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           backgroundColor: Colors.grey[800],
           title: Center(
               child: Column(children: <Widget>[
@@ -204,9 +209,9 @@ class _MyAppState extends State<Page15> with WidgetsBindingObserver {
                               onSurface: Colors.grey,
                             ),
                             onPressed: () {
-                              // getData();
-                              print('đã bấm nút HOÀN TẤT');
-                              Navigator.of(context).popUntil((route) => route.isFirst);
+                              getData();
+                              // print('đã bấm nút HOÀN TẤT');
+                              // Navigator.of(context).popUntil((route) => route.isFirst);
                             },
                           ),
                         ),
@@ -236,6 +241,6 @@ class _MyAppState extends State<Page15> with WidgetsBindingObserver {
                 ],
               )),
         ),
-      ),
+      // ),
     );
   }}

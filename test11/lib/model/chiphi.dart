@@ -2,7 +2,7 @@ class Charge {
   String costPkd;
   String costCert;
   String costPdb;
-  bool? costService;
+  String? costService;
   String costTotalTemp;
   String voucherCode;
 

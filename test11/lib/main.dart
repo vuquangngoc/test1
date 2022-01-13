@@ -9,29 +9,41 @@ import '3/Page3.dart';
 import '4/Page4.dart';
 import '5/Page5.dart';
 import '6/Page6.dart';
+import 'package:test11/dat_lich_dang_kiem/a1.dart';
+
+import 'dat_dich_vu_dang_kiem/b1.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  // const MyApp({Key? key}) : super(key: key);
+  const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: home(),
+      home: HomeState(),
     );
   }
 }
+class HomeState extends StatefulWidget {
+  const HomeState({Key? key}) : super(key: key);
 
-class home extends StatelessWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return home();
+  }
+}
+class home extends State<HomeState> {
+
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-        onWillPop: () async {
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Đây là trang chủ - không thể thực hiện tác vụ quay lại !!!')));
-      return false;
-    },
-    child:  Scaffold(
+    // return WillPopScope(
+    //     onWillPop: () async {
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //       SnackBar(content: Text('Đây là trang chủ - không thể thực hiện tác vụ quay lại !!!')));
+    //   return false;
+    // },
+    return MaterialApp(
+        home:  Scaffold(
       //   theme: ThemeData(
       //       primarySwatch: Colors.grey,
       //     ),
@@ -105,7 +117,7 @@ class home extends StatelessWidget {
                     print('đã bấm nút ');
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) =>const Pagea1(title: "CỔNG DỊCH VỤ ĐĂNG KIỂM")),
+                      MaterialPageRoute(builder: (context) =>const Page1(title: "CỔNG DỊCH VỤ ĐĂNG KIỂM")),
                     );
                   },
                 ),
@@ -127,7 +139,7 @@ class home extends StatelessWidget {
                     print('đã bấm nút ');
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Page2()),
+                      MaterialPageRoute(builder: (context) => const Page2(title: "CỔNG DỊCH VỤ ĐĂNG KIỂM")),
                     );
                   },
                 ),

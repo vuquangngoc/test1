@@ -18,7 +18,9 @@ class Page14 extends StatefulWidget {
     required this.dateDK,
     required this.dichvu,
     required this.timeDK,}) : super(key: key);
+
   final String title;
+
   final String userName;
   final String phoneNumber;
   final String bsx;
@@ -35,48 +37,27 @@ class Page14 extends StatefulWidget {
   final String timeDK;
   final bool dichvu;
   @override
-  State<StatefulWidget> createState() {
-    return _MyAppState();
-  }
+  State<StatefulWidget> createState()
+    => _MyAppState();
+
 }
 
-class _MyAppState extends State<Page14> with WidgetsBindingObserver {
+class _MyAppState extends State<Page14> {
 // const Page1({Key? key}) : super(key: key);
-  static final Map<String, String> genderMap = {
-    'male': 'Male',
-    'female': 'Female',
-    'other': 'Other',
-  };
-  int _selection = 0;
-
-  selectTime(int? timeSelected) {
-    setState(() {
-      _selection = timeSelected!;
-    });
-  }
-
-  String _selectedGender = genderMap.keys.first;
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
 
   bool isChecked = false;
   @override
   Widget build(BuildContext context) {
-    Color getColor(Set<MaterialState> states) {
-      const Set<MaterialState> interactiveStates = <MaterialState>{
-        MaterialState.pressed,
-        MaterialState.hovered,
-        MaterialState.focused,
-      };
-      if (states.any(interactiveStates.contains)) {
-        return Colors.blue;
-      }
-      return Colors.red;
-    }
-    return MaterialApp(
-        title: "Giao diện thực tập",
-        home: Scaffold(
+    return Scaffold(
+      key: _scaffoldKey,
+    // return MaterialApp(
+    //     title: "Giao diện thực tập",
+    //     home: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
+          automaticallyImplyLeading: false,
         backgroundColor: Colors.grey[800],
         title: Center(
         child: Column(children: <Widget>[
@@ -155,9 +136,9 @@ class _MyAppState extends State<Page14> with WidgetsBindingObserver {
           ],
     )),
     ),
-        ),
+        );
 
-    );
+    // );
   }
   void tieptucpage15(){
     var userName=widget.userName;
@@ -178,22 +159,22 @@ class _MyAppState extends State<Page14> with WidgetsBindingObserver {
     print('đã bấm nút tiếp tục');
     Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => Page15(
-              userName: userName,
-              phoneNumber: phoneNumber,
-              bsx: bienso,
-              idTP: tp,
-              idTDK: tdk,
-              hangxe: hangxe,
-              year: nam,
-              user: canhan,
-              sohuu: sohuu,
-              idPTDK: idPTDk,
-              idPTDB: idPTDB,
-              dateDK: dateDK,
-              voucher: vocher,
-              timeDK: slot,
-              dichvu: dichvu,
-              title:
+            userName: userName,
+            phoneNumber: phoneNumber,
+            bsx: bienso,
+            idTP: tp,
+            idTDK: tdk,
+            hangxe: hangxe,
+            year: nam,
+            user: canhan,
+            sohuu: sohuu,
+            idPTDK: idPTDk,
+            idPTDB: idPTDB,
+            dateDK: dateDK,
+            voucher: vocher,
+            timeDK: slot,
+            dichvu: dichvu,
+            title:
               "CỔNG DỊCH VỤ ĐĂNG KIỂM BẢO HIỂM")),
     );
   }}

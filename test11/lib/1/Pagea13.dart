@@ -51,19 +51,17 @@ class Pagea13 extends StatefulWidget {
   final String timeDK;
 
   @override
-  State<StatefulWidget> createState() {
-    return _MyAppState();
-  }
+  State<StatefulWidget> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<Pagea13> with WidgetsBindingObserver {
+class _MyAppState extends State<Pagea13> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   bool isChecked = false;
   var controllerUuDai = TextEditingController();
   late Future<Charge> futureCharge;
   Voucher? voucher;
-  var errVoucher = "Bạn chưa nhập voucher";
-  var checkVoucher = false;
+  var errVoucher="Bạn chưa nhập voucher";
+  var checkVoucher=false;
 
   Future<Charge> getPrice() async {
     var response = await http.post(
@@ -87,12 +85,10 @@ class _MyAppState extends State<Pagea13> with WidgetsBindingObserver {
       throw Exception('Failed to create album.');
     }
   }
-
-  getVocher(String id) async {
-    var reponse = await http.get(
-        Uri.parse("https://api.dangkiem.online/api/Voucher/is_voucher/$id"));
+  getVocher(String id) async{
+    var reponse=await http.get(Uri.parse("https://api.dangkiem.online/api/Voucher/is_voucher/$id"));
     var jsonResponse = jsonDecode(reponse.body);
-    if (reponse.statusCode == 200) {
+    if(reponse.statusCode==200){
       setState(() {
         Voucher.fromJson(jsonResponse);
         futureCharge= getPrice();
@@ -120,11 +116,13 @@ class _MyAppState extends State<Pagea13> with WidgetsBindingObserver {
       return Colors.red;
     }
 
-    return MaterialApp(
-        title: "Giao diện thực tập",
-        home: Scaffold(
+    return Scaffold(
+        key: _scaffoldKey,
+        // title: "Giao diện thực tập",
+        // home: Scaffold(
             resizeToAvoidBottomInset: false,
             appBar: AppBar(
+              automaticallyImplyLeading: false,
               backgroundColor: Colors.grey[800],
               title: Center(
                   child: Column(children: <Widget>[
@@ -246,12 +244,7 @@ class _MyAppState extends State<Pagea13> with WidgetsBindingObserver {
                           const SizedBox(
                             height: 0.1,
                           ),
-                          DottedBorder(
-                  borderType: BorderType.RRect,
-                  child: SizedBox(
-                  height: 80,
-                  width: 500,
-                  child:        Row(
+                             Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Checkbox(
@@ -277,8 +270,8 @@ class _MyAppState extends State<Pagea13> with WidgetsBindingObserver {
                                   child: Container(
                                     alignment: Alignment.center,
                                     margin: const EdgeInsets.all(15),
-                                    width: 60,
-                                    height: 25,
+                                    width: 115,
+                                    height: 45,
                                     decoration: BoxDecoration(
                                       border: Border.all(),
                                       borderRadius: BorderRadius.circular(12),
@@ -287,12 +280,12 @@ class _MyAppState extends State<Pagea13> with WidgetsBindingObserver {
                                         snapshot.data!.costService.toString()),
                                   ))
                             ],
-                            )) ),
+                            ),
 
-                          const Text(
-                            "- - - - - - - - - - - - - - -- - - - - - - - - - - - - - - - - - - - - - - - -  ",
-                            style: TextStyle(fontWeight: FontWeight.w900),
-                          ),
+                          // const Text(
+                          //   "- - - - - - - - - - - - - - -- - - - - - - - - - - - - - - - - - - - - - - - -  ",
+                          //   style: TextStyle(fontWeight: FontWeight.w900),
+                          // ),
 
 
                           const SizedBox(
@@ -361,10 +354,10 @@ class _MyAppState extends State<Pagea13> with WidgetsBindingObserver {
                               )
                             ],
                   )))),
-                          const Text(
-                            "- - - - - - - - - - - - - - -- - - - - - - - - - - - - - - - - - - - - - - - -  ",
-                            style: TextStyle(fontWeight: FontWeight.w900),
-                          ),
+                          // const Text(
+                          //   "- - - - - - - - - - - - - - -- - - - - - - - - - - - - - - - - - - - - - - - -  ",
+                          //   style: TextStyle(fontWeight: FontWeight.w900),
+                          // ),
                           const SizedBox(
                             height: 0.1,
                           ),
@@ -400,6 +393,7 @@ class _MyAppState extends State<Pagea13> with WidgetsBindingObserver {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
+
                               FlatButton(
                                 shape: StadiumBorder(),
                                 padding: EdgeInsets.all(15.0),
@@ -433,7 +427,7 @@ class _MyAppState extends State<Pagea13> with WidgetsBindingObserver {
                   return const CircularProgressIndicator();
                 },
               )), // This trailing comma makes auto-formatting nicer for build methods.
-            )));
+            ));
   }
   void nextpage14(){
     var userName=widget.userName;
@@ -452,8 +446,10 @@ class _MyAppState extends State<Pagea13> with WidgetsBindingObserver {
     var slot=widget.timeDK;
     var dichvu=isChecked;
     print('đã bấm nút tiếp tục');
-    Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => Page14(
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => Page14(
               userName: userName,
               phoneNumber: phoneNumber,
               bsx: bienso,

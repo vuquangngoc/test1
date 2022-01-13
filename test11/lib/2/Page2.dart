@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:test11/model/City.dart';
 import '../1/Page12.dart';
 import 'Page22.dart';
 import '../main.dart';
@@ -13,7 +14,7 @@ import 'package:http/http.dart' as http;
 //   final String namecity;
 // }
 
-class Page2 extends StatefulWidget {
+class Page2test extends StatefulWidget {
   static const String _title = 'Flutter Code Sample';
   @override
   State<StatefulWidget> createState() {
@@ -35,7 +36,7 @@ class Page2 extends StatefulWidget {
 //   }
 // }
 
-class _MyAppState extends State<Page2> with WidgetsBindingObserver {
+class _MyAppState extends State<Page2test> with WidgetsBindingObserver {
 // const Page1({Key? key}) : super(key: key);
   final nameEditingController = TextEditingController();
   final sdtEditingController = TextEditingController();
@@ -255,23 +256,23 @@ class _MyAppState extends State<Page2> with WidgetsBindingObserver {
                       borderRadius: BorderRadius.circular(20.0)),
                   contentPadding: EdgeInsets.all(5),
                 ),
-   child:  DropdownButton<City>(
-     hint: const Text("Tỉnh/Tp",),
-     underline: SizedBox(),
-     value: selectTp,
-     iconSize: 36,
-     isExpanded: true,
-     items: listTp.map((City item) {
-       return DropdownMenuItem<City>(
-         child: Text("TP " + item.name),
-         value: item,
-       );
-     }).toList(),
-     onChanged: (value) {
-       onChaneCity(value);
-
-     },
-   ),
+   // child:  DropdownButton<City>(
+   //   hint: const Text("Tỉnh/Tp",),
+   //   underline: SizedBox(),
+   //   value: selectTp,
+   //   iconSize: 36,
+   //   isExpanded: true,
+   //   // items: listTp.map((City item) {
+   //   //   return DropdownMenuItem<City>(
+   //   //     child: Text("TP " + item.name),
+   //   //     value: item,
+   //   //   );
+   //   // }).toList(),
+   //   onChanged: (value) {
+   //     onChaneCity(value);
+   //
+   //   },
+   // ),
               ),
               SizedBox(width: 20, height: 10),
 

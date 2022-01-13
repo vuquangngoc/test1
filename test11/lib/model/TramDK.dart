@@ -19,6 +19,7 @@ class TramDk {
     data['cityId'] = this.cityId;
     data['stationId']=this.stationId;
     data['stationName'] = this.stationName;
+    data['address'] = this.address;
     return data;
   }
 }

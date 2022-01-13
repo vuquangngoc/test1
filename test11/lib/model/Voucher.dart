@@ -1,38 +1,21 @@
+
 class Voucher {
-  String code;
-  String description;
-  int count;
-  int discount;
-  String startTime;
-  String endTime;
-  String createdDate;
-  String updatedDate;
-  bool isDisable;
-  bool isDeleted;
+  int code;
+  String message;
 
-  Voucher(
-      { required this.code,
-        required this.description,
-        required this.count,
-        required  this.discount,
-        required this.startTime,
-        required this.endTime,
-        required this.createdDate,
-        required this.updatedDate,
-        required this.isDisable,
-        required this.isDeleted});
+  Voucher({required this.code, required this.message});
 
-  factory Voucher.fromJson(Map<String, dynamic> json) => Voucher(
-    code : json['code'],
-    description : json['description'],
-    count : json['count'],
-    discount : json['discount'],
-    startTime : json['startTime'],
-    endTime : json['endTime'],
-    createdDate : json['createdDate'],
-    updatedDate : json['updatedDate'],
-    isDisable : json['isDisable'],
-    isDeleted : json['isDeleted'],
-  );
+  factory Voucher.fromJson(Map<String, dynamic> json) {
+    return Voucher(
+        code : json["code"],
+        message :json["message"]
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data["code"] = this.code;
+    data["message"] = this.message;
+    return data;
+  }
 }
-

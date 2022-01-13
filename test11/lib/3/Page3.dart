@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test11/model/City.dart';
 import '../1/Page12.dart';
 import '../2/Page22.dart';
 import 'Page32.dart';
@@ -201,30 +202,32 @@ class _MyAppState extends State<Page3> with WidgetsBindingObserver {
               //     value: _selectedState,
               //   ),
               // ),
-              InputDecorator(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20.0)),
-                  contentPadding: EdgeInsets.all(5),
-                ),
-                child:  DropdownButton<City>(
-                  hint: const Text(" Tỉnh/Tp",),
-                  underline: SizedBox(),
-                  value: selectTp,
-                  iconSize: 36,
-                  isExpanded: true,
-                  items: listTp.map((City item) {
-                    return DropdownMenuItem<City>(
-                      child: Text("   TP " + item.name),
-                      value: item,
-                    );
-                  }).toList(),
-                  onChanged: (value) {
-                    onChaneCity(value);
 
-                  },
-                ),
-              ),
+
+              // InputDecorator(
+              //   decoration: InputDecoration(
+              //     border: OutlineInputBorder(
+              //         borderRadius: BorderRadius.circular(20.0)),
+              //     contentPadding: EdgeInsets.all(5),
+              //   ),
+              //   child:  DropdownButton<City>(
+              //     hint: const Text(" Tỉnh/Tp",),
+              //     underline: SizedBox(),
+              //     value: selectTp,
+              //     iconSize: 36,
+              //     isExpanded: true,
+              //     items: listTp.map((City item) {
+              //       return DropdownMenuItem<City>(
+              //         child: Text("   TP " + item.name),
+              //         value: item,
+              //       );
+              //     }).toList(),
+              //     onChanged: (value) {
+              //       onChaneCity(value);
+              //
+              //     },
+              //   ),
+              // ),
               SizedBox(width: 20, height: 10),
 
               SizedBox(width: 20, height: 10),

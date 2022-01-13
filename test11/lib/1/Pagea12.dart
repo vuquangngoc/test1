@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../model/phuongtiendangkiem.dart';
+// import '../model/phuongtiendangkiem.dart';
 import '../model/phuongtienduongbo.dart';
 import '../repository2.dart';
 import 'Page1.dart';
@@ -15,9 +15,9 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:test11/model/time.dart';
-
+import 'package:test11/model/chiphi.dart';
 import 'Pagea13.dart';
-
+import 'package:test11/model/Loaiphuongtien.dart';
 class Pagea12 extends StatefulWidget {
   Pagea12(
       {Key? key, required this.title, required this.stationID,required this.bsx,required this.name,required this.phone,required this.tp})
@@ -30,13 +30,11 @@ class Pagea12 extends StatefulWidget {
   int tp;
   int stationID;
   @override
-  State<StatefulWidget> createState() {
-    return _MyAppState();
+  State<Pagea12> createState() => _MyAppState();
   }
-}
+
 
 class _MyAppState extends State<Pagea12> {
-  String? dropdownValue2;
   TextEditingController controllerCar = TextEditingController();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   String? selectedDate;
@@ -45,17 +43,16 @@ class _MyAppState extends State<Pagea12> {
   String? valueHinhthuc;
   String? valueSohuu;
   final itemPT = ["A", "B"];
-  List<dsphuongtiendangkiem> listPT = [];
-  dsphuongtiendangkiem? selectPT;
-  List<dsphuongtiendangkiem> listRoadVerhicle = [];
-  dsphuongtiendangkiem? selectPTDB;
+  List<PTDK> listPT = [];
+  PTDK? selectPT;
+  List<PTDK> listRoadVerhicle = [];
+  PTDK? selectPTDB;
   int? selectYear;
   List<int> listYear = [];
   List<Date> listDate = [];
   Date? valueDate;
-  bool group_Value = true;
-  bool group_Sohuu = true;
-
+  bool group_Value=true;
+  bool group_Sohuu=true;
   getYear() async {
     const String url = 'https://api.dangkiem.online/api/Year';
     var response = await http.get(Uri.parse(url));
@@ -70,8 +67,8 @@ class _MyAppState extends State<Pagea12> {
     var responese = await http.get(Uri.parse(url));
     if (responese.statusCode == 200) {
       List<dynamic> jsonResponse = jsonDecode(responese.body);
-      List<dsphuongtiendangkiem> listPTDK = List<dsphuongtiendangkiem>.from(
-          jsonResponse.map((it) => dsphuongtiendangkiem.fromJson(it)));
+      List<PTDK> listPTDK =
+      List<PTDK>.from(jsonResponse.map((it) => PTDK.fromJson(it)));
       setState(() {
         listPT = listPTDK;
       });
@@ -83,8 +80,8 @@ class _MyAppState extends State<Pagea12> {
     var responese = await http.get(Uri.parse(url));
     if (responese.statusCode == 200) {
       List<dynamic> jsonResponse = jsonDecode(responese.body);
-      List<dsphuongtiendangkiem> listPTDB = List<dsphuongtiendangkiem>.from(
-          jsonResponse.map((it) => dsphuongtiendangkiem.fromJson(it)));
+      List<PTDK> listPTDB =
+      List<PTDK>.from(jsonResponse.map((it) => PTDK.fromJson(it)));
       setState(() {
         listRoadVerhicle = listPTDB;
       });
@@ -92,13 +89,13 @@ class _MyAppState extends State<Pagea12> {
   }
 
   getDate(String date, id) async {
-    String url =
-        'https://api.dangkiem.online/api/Slot?datetime=$date&stationId=$id';
+    String url = 'https://api.dangkiem.online/api/Slot?datetime=$date&stationId=$id';
     var response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       var jsonResponse = jsonDecode(response.body);
       setState(() {
-        listDate = List<Date>.from(
+        listDate =
+        List<Date>.from(
             jsonResponse['slot'].map((date) => Date.fromJson(date)));
       });
     }
@@ -114,9 +111,11 @@ class _MyAppState extends State<Pagea12> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: "Giao diện thực tập",
-        home: Scaffold(
+    // return MaterialApp(
+    //     title: "Giao diện thực tập",
+    //     home: Scaffold(
+    return Scaffold(
+        key: _scaffoldKey,
             appBar: AppBar(
               backgroundColor: Colors.grey[800],
               title: Center(
@@ -374,7 +373,7 @@ class _MyAppState extends State<Pagea12> {
                               padding: const EdgeInsets.only(
                                   // left: 14.0, right: 14
                                   ),
-                              child: DropdownButton<dsphuongtiendangkiem>(
+                              child: DropdownButton<PTDK>(
                                 hint: const Text(
                                   "Loại phương tiện theo quy định đăng kiểm",
                                   textAlign: TextAlign.right,
@@ -383,8 +382,8 @@ class _MyAppState extends State<Pagea12> {
                                 value: selectPT,
                                 iconSize: 30,
                                 isExpanded: true,
-                                items: listPT.map((dsphuongtiendangkiem item) {
-                                  return DropdownMenuItem<dsphuongtiendangkiem>(
+                                items: listPT.map((PTDK item) {
+                                  return DropdownMenuItem<PTDK>(
                                     child: Text(" " + item.nameVehicle),
                                     value: item,
                                   );
@@ -418,7 +417,7 @@ class _MyAppState extends State<Pagea12> {
                               padding: const EdgeInsets.only(
                                   // left: 14.0, right: 14
                                   ),
-                              child: DropdownButton<dsphuongtiendangkiem>(
+                              child: DropdownButton<PTDK>(
                                   hint: const Text(
                                     "Loại phương tiện theo quy định lưu thông đường bộ",
                                     textAlign: TextAlign.left,
@@ -427,13 +426,11 @@ class _MyAppState extends State<Pagea12> {
                                   value: selectPTDB,
                                   iconSize: 30,
                                   isExpanded: true,
-                                  items: listRoadVerhicle
-                                      .map((dsphuongtiendangkiem item) {
-                                    return DropdownMenuItem<
-                                        dsphuongtiendangkiem>(
+                                  items: listRoadVerhicle.map((PTDK item) {
+                                    return DropdownMenuItem<PTDK>(
                                       child: Text(
-                                        item.nameVehicle,
-                                        overflow: TextOverflow.fade,
+                                          item.nameVehicle,
+                                          overflow: TextOverflow.ellipsis
                                       ),
                                       value: item,
                                     );
@@ -543,7 +540,8 @@ class _MyAppState extends State<Pagea12> {
                         child: Text('TIẾP TỤC'),
                         textColor: Colors.white,
                         color: Colors.yellow[800],
-                        onPressed: () {var name=widget.name;
+                        onPressed: () {
+                        var name=widget.name;
                         var phone=widget.phone;
                         var idTP=widget.tp;
                         var idTDk=widget.stationID;
@@ -556,15 +554,16 @@ class _MyAppState extends State<Pagea12> {
                         var nam=selectYear;
                         var ngayDK=selectedDate!;
                         var slotDK=valueDate!.time ;
-                          if (selectYear == null ||
-                              selectPT == null ||
-                              selectPTDB == null ||
-                              controllerCar.text.isEmpty) {
-                            const snackBar = SnackBar(
-                                content: Text('Bạn chưa điền đủ thông tin'));
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(snackBar);
-                          } else {
+                        if (selectYear == null ||
+                            selectPT == null ||
+                            selectPTDB == null ||
+                            controllerCar.text.isEmpty) {
+                          const snackBar = SnackBar(
+                              content:
+                              Text('Bạn chưa điền đủ thông tin'));
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(snackBar);
+                        } else {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -618,7 +617,7 @@ class _MyAppState extends State<Pagea12> {
                 //       .toList(),
                 // ),
               ],
-            ))));
+            )));
   }
 
   DropdownMenuItem<String> buildMenuitem(String item) => DropdownMenuItem(

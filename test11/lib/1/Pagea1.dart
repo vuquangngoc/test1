@@ -15,14 +15,13 @@ class Pagea1 extends StatefulWidget {
 
   final String title;
   @override
-  State<StatefulWidget> createState() {
-    return _MyAppState();
-  }
+  State<Pagea1> createState() => _MyAppState();
+
 }
 
 
 
-class _MyAppState extends State<Pagea1> with WidgetsBindingObserver {
+class _MyAppState extends State<Pagea1>  {
   var controllerName_dl = TextEditingController();
   var controllerPhone_dl = TextEditingController();
   var controllerBienso_dl = TextEditingController();
@@ -39,30 +38,32 @@ class _MyAppState extends State<Pagea1> with WidgetsBindingObserver {
   var checkTDK=false;
   var errorTDK="Trạm đăng kiểm không được để trống";
 
-  City? selectTp;
-  List<City> listTp = [];
+  List<CityData> listTp =[];
+  CityData? selectTp;
   TramDk? selectDk;
-  List<TramDk> listDk=[];
+  List<TramDk> listDk = [];
 
   var stationID;
 
-  getCity() async {//City
+  getCity() async {
     const String url = 'https://api.dangkiem.online/api/City';
     var response = await http.get(Uri.parse(url));
-    List<dynamic> jsonResponse = jsonDecode(response.body)["city"];
+    var jsonResponse = jsonDecode(response.body);
+    //CityData cityData=CityData.fromJson(jsonResponse);
     setState(() {
-      listTp = List<City>.from(
-          jsonResponse.map((it) => City.fromJson(it)));
+      listTp = List<CityData>.from(jsonResponse['city'].map((it) => CityData.fromJson(it)));
     });
   }
-  getTramDk(int id) async {
-    String url = 'https://api.dangkiem.online/api/Station/$id';
-    var response = await http.get(Uri.parse(url));
+
+  getTramDk(int cityID) async {
+    String url = 'https://api.dangkiem.online/api/Station/$cityID';
+    http.Response response = await http.get(Uri.parse(url));
     List<dynamic> jsonResponse = jsonDecode(response.body);
     setState(() {
-      listDk = List<TramDk>.from(
-          jsonResponse.map((dk) => TramDk.fromJson(dk)));
-    });}
+      listDk = List<TramDk>.from(jsonResponse.map((dk) => TramDk.fromJson(dk)));
+    });
+  }
+
   @override
   void initState() {
 
@@ -76,11 +77,15 @@ class _MyAppState extends State<Pagea1> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "Giao diện thực tập",
-      home: Scaffold(
+    // return MaterialApp(
+    //   title: "Giao diện thực tập",
+    //   home: Scaffold(
+
+    return Scaffold(
+      // key: _scaffoldKey,
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           backgroundColor: Colors.grey[800],
           title: Center(
               child: Column(children: <Widget>[
@@ -151,13 +156,13 @@ class _MyAppState extends State<Pagea1> with WidgetsBindingObserver {
                   border: Border.all(color: Colors.grey),
                   borderRadius: BorderRadius.circular(20),
                 ),
-                child: DropdownButton<City>(
-                    hint: const Text("Tỉnh/Tp"),
+                child: DropdownButton<CityData>(
+                    hint: const Text("Tỉnh/ Thành phố"),
                     value: selectTp ,
                     iconSize: 36,
                     isExpanded: true,
-                    items: listTp.map((City item) {
-                      return DropdownMenuItem<City>(
+                    items: listTp.map((CityData item) {
+                      return DropdownMenuItem<CityData>(
                         child: Text("TP " + item.name),
                         value: item,
                       );
@@ -219,11 +224,11 @@ class _MyAppState extends State<Pagea1> with WidgetsBindingObserver {
             ],
           ),
         ),
-      ),
+      // ),
     );
   }
   void checkValue(){
-    int idPTDK=selectDk!.stationId;
+    int idTDK=selectDk!.stationId;
     String bienso=controllerBienso_dl.text;
     String name=controllerName_dl.text;
     String phone=controllerPhone_dl.text;
@@ -239,9 +244,20 @@ class _MyAppState extends State<Pagea1> with WidgetsBindingObserver {
         checkBSX=true;
         checkTP=true;
         checkTDK=true;
-        const snackBar = SnackBar(
-            content: Text('Bạn chưa điền đủ thông tin'));
-        ScaffoldMessenger.of(context)
+        final snackBar = SnackBar(
+          content: const Text('Bạn chưa điền đủ thông tin'),
+          action: SnackBarAction(
+            label: 'Ẩn',
+            textColor: Colors.white,
+            onPressed: () {
+            },
+          ),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
+          backgroundColor: Colors.blue,
+        ); ScaffoldMessenger.of(context)
             .showSnackBar(snackBar);
       } else {
         Navigator.push(
@@ -250,9 +266,9 @@ class _MyAppState extends State<Pagea1> with WidgetsBindingObserver {
             builder: (context) =>  Pagea12(
                 name: name,
                 phone: phone,
-                bsx: bienso,
                 tp: idTP,
-                stationID: idPTDK,
+                bsx: bienso,
+                stationID: idTDK,
                 title:
                 "CỔNG DỊCH VỤ ĐĂNG KIỂM BẢO HIỂM"),
           ),
